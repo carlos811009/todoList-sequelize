@@ -6,6 +6,10 @@ const bcrypt = require('bcryptjs')
 const app = express()
 const PORT = 3000
 
+const db = require('./models')
+const User = db.User
+const Todo = db.Todo
+
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 app.use(express.urlencoded({ extended: true }))
@@ -25,7 +29,9 @@ app.get('/users/register', (req, res) => {
 })
 
 app.post('/users/register', (req, res) => {
-  res.send('register')
+  const { name, email, password, confirmPassword } = req.body
+  User.create({ name, email, password })
+    .then(user => res.redirect('/'))
 })
 
 app.get('/users/logout', (req, res) => {
