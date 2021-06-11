@@ -25,9 +25,9 @@ module.exports = app => {
   }))
 
   passport.use(new FacebookStrategy({
-    clientID: '380669796723686',
-    clientSecret: '6202b3330279070923d18e4885c756bf',
-    callbackURL: 'http://localhost:3000/auth/facebook/callback',
+    clientID: process.env.FACEBOOK_ID,
+    clientSecret: process.env.FACEBOOK_SECRET,
+    callbackURL: process.env.FACEBOOK_CALLBACK,
     profileFields: ['email', 'displayName']
   }, (accessToken, refreshToken, profile, done) => {
     const { name, email } = profile._json
